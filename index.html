@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shanmugam Valliappan | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark-mode">
+  <header class="navbar" id="top">
+    <nav class="nav-container">
+      <a href="#top" class="logo">SV</a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">☰</button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☀️</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero fade-in" id="hero">
+      <div class="hero-content">
+        <p class="hero-greeting">Hi, I'm</p>
+        <h1>Shanmugam <span>Valliappan</span></h1>
+        <p class="typing-text" id="typingText"></p>
+        <button class="btn primary-btn" id="viewProjectsBtn">View Projects</button>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="about">
+      <h2>About Me</h2>
+      <p>
+        I am a high school student passionate about engineering, coding, scouting, and leadership.
+        I enjoy building practical projects, mentoring teammates, and learning how to solve real-world
+        problems with creativity and discipline.
+      </p>
+      <div class="about-icons">
+        <div class="icon-card">⚙️<span>Engineering</span></div>
+        <div class="icon-card">💻<span>Coding</span></div>
+        <div class="icon-card">🏕️<span>Scouting</span></div>
+        <div class="icon-card">🧭<span>Leadership</span></div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Electric Skateboard Project</h3>
+          <p>Designed and assembled a custom electric skateboard with speed control, battery safety, and a strong deck.</p>
+          <a href="#" class="btn project-btn">View Project</a>
+        </article>
+
+        <article class="project-card">
+          <h3>Engineering Design Journal</h3>
+          <p>Built a digital notebook to track prototypes, test results, and design improvements during project development.</p>
+          <a href="#" class="btn project-btn">View Project</a>
+        </article>
+
+        <article class="project-card">
+          <h3>Scout Leadership Website</h3>
+          <p>Created a site for scout planning with event details, team tasks, and communication updates.</p>
+          <a href="#" class="btn project-btn">View Project</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="skills">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-box">HTML</div>
+        <div class="skill-box">CSS</div>
+        <div class="skill-box">JavaScript</div>
+        <div class="skill-box">Python</div>
+        <div class="skill-box">Leadership</div>
+        <div class="skill-box">Engineering</div>
+      </div>
+    </section>
+
+    <section class="section fade-in" id="contact">
+      <h2>Contact Me</h2>
+      <form id="contactForm" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
+
+        <button type="submit" class="btn primary-btn">Send Message</button>
+        <p id="formMessage" class="form-message"></p>
+      </form>
+    </section>
+  </main>
+
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,125 +1,202 @@
-// ------------------------------
-// 1) Hero typing animation
-// ------------------------------
-const typingText = document.getElementById('typingText');
-const subtitle = 'Student, builder, mentor, and future engineer.';
-let charIndex = 0;
+// Portfolio interactions and animations.
 
-function typeSubtitle() {
-  if (charIndex < subtitle.length) {
-    typingText.textContent += subtitle.charAt(charIndex);
-    charIndex++;
-    setTimeout(typeSubtitle, 55);
+// Typing animation for hero focus areas.
+const typingText = document.getElementById('typingText');
+const typingWords = ['Robotics', 'Chemistry', 'Leadership', 'Engineering', 'Coding'];
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+function typeLoop() {
+  const currentWord = typingWords[wordIndex];
+
+  if (!deleting) {
+    typingText.textContent = currentWord.slice(0, charIndex + 1);
+    charIndex += 1;
+
+    if (charIndex === currentWord.length) {
+      deleting = true;
+      setTimeout(typeLoop, 1000);
+      return;
+    }
+  } else {
+    typingText.textContent = currentWord.slice(0, charIndex - 1);
+    charIndex -= 1;
+
+    if (charIndex === 0) {
+      deleting = false;
+      wordIndex = (wordIndex + 1) % typingWords.length;
+    }
   }
+
+  setTimeout(typeLoop, deleting ? 55 : 85);
 }
 
-window.addEventListener('DOMContentLoaded', typeSubtitle);
+// Particle network background with performance-safe limits.
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
 
-// ------------------------------
-// 2) Smooth scroll button (Hero -> Projects)
-// ------------------------------
-const viewProjectsBtn = document.getElementById('viewProjectsBtn');
-const projectsSection = document.getElementById('projects');
+function sizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
 
-viewProjectsBtn.addEventListener('click', () => {
-  projectsSection.scrollIntoView({ behavior: 'smooth' });
-});
+function buildParticles() {
+  const count = Math.min(70, Math.floor(window.innerWidth / 18));
+  particles = Array.from({ length: count }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    r: Math.random() * 1.6 + 0.7
+  }));
+}
 
-// ------------------------------
-// 3) Dark mode toggle
-// ------------------------------
-const themeToggle = document.getElementById('themeToggle');
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('light-mode');
+  for (let i = 0; i < particles.length; i += 1) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
 
-  // Update icon for better feedback
-  if (document.body.classList.contains('light-mode')) {
-    themeToggle.textContent = '🌙';
-  } else {
-    themeToggle.textContent = '☀️';
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+    ctx.fillStyle = 'rgba(180, 201, 255, 0.55)';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    for (let j = i + 1; j < particles.length; j += 1) {
+      const q = particles[j];
+      const dx = p.x - q.x;
+      const dy = p.y - q.y;
+      const distance = Math.hypot(dx, dy);
+
+      if (distance < 105) {
+        ctx.strokeStyle = `rgba(130, 180, 255, ${0.15 - distance / 800})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
+      }
+    }
   }
-});
 
-// ------------------------------
-// 4) Mobile menu toggle
-// ------------------------------
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  requestAnimationFrame(animateParticles);
+}
+
+// Sticky navigation: active link highlight + mobile toggle.
 const navLinks = document.getElementById('navLinks');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const links = Array.from(document.querySelectorAll('.nav-link'));
+const sections = Array.from(document.querySelectorAll('main section'));
 
 mobileMenuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
+  const isOpen = navLinks.classList.toggle('open');
+  mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
 });
 
-// Close mobile menu when a link is clicked
-navLinks.querySelectorAll('a').forEach((link) => {
+links.forEach((link) => {
   link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
-// ------------------------------
-// 5) Fade-in animation on scroll
-// ------------------------------
-const faders = document.querySelectorAll('.fade-in');
+function setActiveLink() {
+  const mid = window.scrollY + window.innerHeight * 0.35;
+  let activeId = 'hero';
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+  sections.forEach((section) => {
+    if (mid >= section.offsetTop) activeId = section.id;
+  });
+
+  links.forEach((link) => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+  });
+}
+
+// Reveal animations + skill bar animation + subtle parallax.
+const revealItems = document.querySelectorAll('.reveal');
+const skillFills = document.querySelectorAll('.skill-fill');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+
+      if (entry.target.id === 'skills') {
+        skillFills.forEach((fill) => {
+          fill.style.width = `${fill.dataset.skill}%`;
+        });
       }
-    });
-  },
-  { threshold: 0.15 }
-);
+    }
+  });
+}, { threshold: 0.16 });
 
-faders.forEach((element) => observer.observe(element));
+revealItems.forEach((item) => revealObserver.observe(item));
 
-// ------------------------------
-// 6) Back-to-top button
-// ------------------------------
-const backToTopBtn = document.getElementById('backToTop');
+function handleParallax() {
+  const y = window.scrollY;
+  const heroCard = document.querySelector('.hero-content');
+  if (heroCard) heroCard.style.transform = `translateY(${y * 0.06}px)`;
+}
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 350) {
-    backToTopBtn.classList.add('show');
-  } else {
-    backToTopBtn.classList.remove('show');
-  }
-});
+// Back to top button.
+const backToTop = document.getElementById('backToTop');
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+function toggleBackToTop() {
+  backToTop.classList.toggle('show', window.scrollY > 420);
+}
 
-// ------------------------------
-// 7) Simple contact form validation
-// ------------------------------
+// Contact form validation + success feedback animation.
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
+function setError(id, text) {
+  document.getElementById(id).textContent = text;
+}
+
 contactForm.addEventListener('submit', (event) => {
-  event.preventDefault(); // Stop page reload
+  event.preventDefault();
 
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
   const message = document.getElementById('message').value.trim();
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Basic checks
-  if (!name || !email || !message) {
-    formMessage.textContent = 'Please fill out all fields.';
-    formMessage.style.color = '#e63946';
+  setError('nameError', name ? '' : 'Please enter your name.');
+  setError('emailError', emailValid ? '' : 'Please enter a valid email address.');
+  setError('messageError', message.length >= 8 ? '' : 'Please include a longer message.');
+
+  if (!name || !emailValid || message.length < 8) {
+    formMessage.className = 'form-message';
+    formMessage.textContent = 'Please fix the highlighted fields and try again.';
     return;
   }
 
-  // Very simple email pattern
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    formMessage.textContent = 'Please enter a valid email address.';
-    formMessage.style.color = '#e63946';
-    return;
-  }
-
-  formMessage.textContent = 'Message sent successfully! (Demo only)';
-  formMessage.style.color = '#2a9d8f';
+  formMessage.className = 'form-message success';
+  formMessage.textContent = 'Thanks! Your message was validated and sent (demo mode).';
   contactForm.reset();
+});
+
+window.addEventListener('scroll', () => {
+  setActiveLink();
+  toggleBackToTop();
+  handleParallax();
+});
+
+window.addEventListener('resize', () => {
+  sizeCanvas();
+  buildParticles();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  typeLoop();
+  sizeCanvas();
+  buildParticles();
+  animateParticles();
+  setActiveLink();
 });

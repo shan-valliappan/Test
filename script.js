@@ -117,20 +117,13 @@ function setActiveLink() {
   });
 }
 
-// Reveal animations + skill bar animation + subtle parallax.
+// Reveal animations + subtle parallax.
 const revealItems = document.querySelectorAll('.reveal');
-const skillFills = document.querySelectorAll('.skill-fill');
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-
-      if (entry.target.id === 'skills') {
-        skillFills.forEach((fill) => {
-          fill.style.width = `${fill.dataset.skill}%`;
-        });
-      }
     }
   });
 }, { threshold: 0.16 });

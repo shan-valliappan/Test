@@ -64,7 +64,7 @@ function animateParticles() {
     if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-    ctx.fillStyle = 'rgba(180, 201, 255, 0.55)';
+    ctx.fillStyle = 'rgba(220, 38, 38, 0.6)';
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();
@@ -76,7 +76,7 @@ function animateParticles() {
       const distance = Math.hypot(dx, dy);
 
       if (distance < 105) {
-        ctx.strokeStyle = `rgba(130, 180, 255, ${0.15 - distance / 800})`;
+        ctx.strokeStyle = `rgba(220, 38, 38, ${0.2 - distance / 800})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(p.x, p.y);

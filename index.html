@@ -6,7 +6,6 @@
   <title>Shanmugam Valliappan | Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -32,12 +31,25 @@
 
   <main>
     <section class="hero reveal" id="hero" data-parallax="0.12">
-      <div class="hero-content glass-card">
-        <p class="hero-intro">Hello, I am</p>
-        <h1>Shanmugam Valliappan</h1>
-        <p class="hero-subtitle">Student • Builder • Mentor • Future Engineer</p>
-        <p class="typing-row">Focus Areas: <span id="typingText"></span><span class="cursor">|</span></p>
-        <a href="#contact" class="btn primary-btn">Contact Me / Internship Opportunities</a>
+      <div class="hero-shell glass-card">
+        <div class="hero-content">
+          <p class="hero-intro">Hello, I am Shanmugam Valliappan</p>
+          <h1>High School Developer | AI, Engineering, and Software Projects</h1>
+          <p class="hero-subtitle">I build practical projects in software and engineering while mentoring younger students and leading through scouting and hands-on collaboration.</p>
+          <p class="typing-row">Focus Areas: <span id="typingText"></span><span class="cursor">|</span></p>
+          <div class="hero-cta-row">
+            <a href="#projects" class="btn primary-btn">View Projects</a>
+            <a href="#contact" class="btn secondary-btn">Contact</a>
+          </div>
+        </div>
+        <aside class="hero-visual" aria-hidden="true">
+          <div class="orb orb-one"></div>
+          <div class="orb orb-two"></div>
+          <div class="hero-stat glass-card">
+            <p>Student Builder</p>
+            <strong>AI • Engineering • Leadership</strong>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -54,9 +66,11 @@
     <section class="section reveal" id="projects" data-parallax="0.04">
       <h2>Projects</h2>
       <div class="projects-grid">
-        <article class="project-card glass-card">
+        <article class="project-card glass-card featured">
+          <span class="featured-badge">Featured Project</span>
           <h3>Posture Guard</h3>
           <p>A posture-awareness web app concept that encourages healthier desk habits through reminders, simple tracking, and progress feedback.</p>
+          <div class="project-tags"><span>Web</span><span>Health Tech</span><span>UX</span></div>
           <span class="status-badge live">Status: Linked Project</span>
           <a href="https://posturegaurd.vercel.app/?" target="_blank" rel="noopener noreferrer" class="btn project-btn">Learn More</a>
         </article>
@@ -64,22 +78,22 @@
         <article class="project-card glass-card">
           <h3>Electric Skateboard Project</h3>
           <p>Designing a custom electric skateboard focused on motor efficiency, battery safety, and a smooth, reliable riding experience.</p>
+          <div class="project-tags"><span>Engineering</span><span>Hardware</span><span>Design</span></div>
           <span class="status-badge dev">Status: In development — currently building this project</span>
-          <a href="#" class="btn project-btn">Learn More</a>
         </article>
 
         <article class="project-card glass-card">
           <h3>Chemistry Study Helper</h3>
           <p>Building an interactive study assistant to simplify chemistry concepts with quick summaries, practice prompts, and learning checkpoints.</p>
+          <div class="project-tags"><span>AI</span><span>Education</span><span>Web</span></div>
           <span class="status-badge dev">Status: In development — currently building this project</span>
-          <a href="#" class="btn project-btn">Learn More</a>
         </article>
 
         <article class="project-card glass-card">
           <h3>Scout Leadership Website</h3>
           <p>Creating a leadership-focused platform for organizing troop activities, mentorship resources, communication updates, and planning tools.</p>
+          <div class="project-tags"><span>Web</span><span>Leadership</span><span>Community</span></div>
           <span class="status-badge dev">Status: In development — currently building this project</span>
-          <a href="#" class="btn project-btn">Learn More</a>
         </article>
       </div>
     </section>
@@ -88,29 +102,28 @@
       <h2>Contact</h2>
       <p class="contact-intro">Interested in collaborating, offering internships, or learning more about my projects? Feel free to reach out.</p>
 
-      <div class="contact-grid">
-        <div class="glass-card contact-card">
-          <p><strong>Email:</strong> <a href="mailto:shan@example.com">shan@example.com</a></p>
-          <a href="#" class="btn secondary-btn">LinkedIn (Placeholder)</a>
-        </div>
-
-        <form id="contactForm" class="glass-card" novalidate>
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" />
-          <small class="error" id="nameError"></small>
-
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" />
-          <small class="error" id="emailError"></small>
-
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
-          <small class="error" id="messageError"></small>
-
-          <button type="submit" class="btn primary-btn">Send Message</button>
-          <p id="formMessage" class="form-message" aria-live="polite"></p>
-        </form>
+      <div class="contact-actions glass-card">
+        <a href="mailto:shanmugam25@duck.com" class="btn secondary-btn">Send Email</a>
+        <a href="https://www.linkedin.com/in/shanmugam-valliappan-a794963a9/" target="_blank" rel="noopener noreferrer" class="btn secondary-btn">LinkedIn</a>
+        <a href="https://github.com/shan-valliappan" target="_blank" rel="noopener noreferrer" class="btn secondary-btn">GitHub</a>
       </div>
+
+      <form id="contactForm" class="glass-card" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" />
+        <small class="error" id="nameError"></small>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" />
+        <small class="error" id="emailError"></small>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message"></textarea>
+        <small class="error" id="messageError"></small>
+
+        <button type="submit" class="btn primary-btn">Send Message</button>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 

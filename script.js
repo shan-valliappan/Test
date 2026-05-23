@@ -36,6 +36,7 @@ function typeLoop() {
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function sizeCanvas() {
   canvas.width = window.innerWidth;
@@ -43,7 +44,7 @@ function sizeCanvas() {
 }
 
 function buildParticles() {
-  const count = Math.min(70, Math.floor(window.innerWidth / 18));
+  const count = prefersReducedMotion ? 0 : Math.min(64, Math.floor(window.innerWidth / 22));
   particles = Array.from({ length: count }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
@@ -86,7 +87,7 @@ function animateParticles() {
     }
   }
 
-  requestAnimationFrame(animateParticles);
+  if (!prefersReducedMotion) requestAnimationFrame(animateParticles);
 }
 
 // Sticky navigation: active link highlight + mobile toggle.
@@ -124,6 +125,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
     }
   });
 }, { threshold: 0.16 });
@@ -131,9 +133,10 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealItems.forEach((item) => revealObserver.observe(item));
 
 function handleParallax() {
+  if (prefersReducedMotion) return;
   const y = window.scrollY;
   const heroCard = document.querySelector('.hero-content');
-  if (heroCard) heroCard.style.transform = `translateY(${y * 0.06}px)`;
+  if (heroCard) heroCard.style.transform = `translateY(${y * 0.04}px)`;
 }
 
 // Back to top button.
@@ -190,6 +193,6 @@ window.addEventListener('DOMContentLoaded', () => {
   typeLoop();
   sizeCanvas();
   buildParticles();
-  animateParticles();
+  if (!prefersReducedMotion) animateParticles();
   setActiveLink();
 });

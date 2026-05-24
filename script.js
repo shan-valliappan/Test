@@ -1,37 +1,5 @@
 // Portfolio interactions and animations.
 
-// Typing animation for hero focus areas.
-const typingText = document.getElementById('typingText');
-const typingWords = ['Robotics', 'Chemistry', 'Leadership', 'Engineering', 'Coding'];
-let wordIndex = 0;
-let charIndex = 0;
-let deleting = false;
-
-function typeLoop() {
-  const currentWord = typingWords[wordIndex];
-
-  if (!deleting) {
-    typingText.textContent = currentWord.slice(0, charIndex + 1);
-    charIndex += 1;
-
-    if (charIndex === currentWord.length) {
-      deleting = true;
-      setTimeout(typeLoop, 1000);
-      return;
-    }
-  } else {
-    typingText.textContent = currentWord.slice(0, charIndex - 1);
-    charIndex -= 1;
-
-    if (charIndex === 0) {
-      deleting = false;
-      wordIndex = (wordIndex + 1) % typingWords.length;
-    }
-  }
-
-  setTimeout(typeLoop, deleting ? 55 : 85);
-}
-
 // Particle network background with performance-safe limits.
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
@@ -187,7 +155,6 @@ window.addEventListener('resize', () => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  typeLoop();
   sizeCanvas();
   buildParticles();
   animateParticles();
